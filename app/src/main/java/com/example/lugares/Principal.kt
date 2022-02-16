@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lugares.databinding.ActivityPrincipalBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class Principal : AppCompatActivity() {
@@ -39,7 +40,7 @@ class Principal : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_lugar, R.id.nav_gallery, R.id.nav_slideshow
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -58,14 +59,11 @@ class Principal : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId)
+        if(item.itemId==R.id.action_logoff)
         {
-            R.id.action_logoff ->
-            {
-                Firebase.auth.singOut()
-                finish()
-                true
-            }else -> super.onOptionsItemSelected(item)
+            Firebase.auth.signOut()
+            finish()
         }
+        return super.onOptionsItemSelected(item)
     }
 }
